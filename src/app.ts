@@ -22,7 +22,14 @@ app.use(morgan("dev"));
 /////THE ONE AND THE ONLY ROUTE
 (async () => {
   await server.start();
-  app.use("/graphql", expressMiddleware(server));
+  app.use(
+    "/graphql",
+    expressMiddleware(server, {
+      context: async ({ req }) => {
+        return { req };
+      },
+    })
+  );
 })();
 
 export default app;

@@ -1,5 +1,7 @@
 const Query = {
-  hello: () => "world",
+  hello() {
+    return "world";
+  },
 };
 
 export default Query;
