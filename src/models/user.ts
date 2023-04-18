@@ -26,15 +26,41 @@ const User = sequelize.define(
     password: {
       type: DataTypes.CHAR(100),
       allowNull: false,
-      set(value: string) {
-        this.setDataValue("password", async function () {
-          const hashedPassword = await bcrypt.hash(value, 12);
-          return hashedPassword;
-        });
-      },
     },
   },
-  { timestamps: true, tableName: "user" }
+  {
+    timestamps: true,
+    tableName: "user",
+    hooks: {
+      beforeCreate: async function (user) {
+        if ("password" in user) {
+          if (user.changed("password")) {
+            const hashedPassword = await bcrypt.hash(
+              user.get("password") as string,
+              12
+            );
+            user.set("password", hashedPassword);
+          }
+        }
+      },
+      beforeUpdate: async function (user) {
+        if ("password" in user) {
+          if (user.changed("password")) {
+            const hashedPassword = await bcrypt.hash(
+              user.get("password") as string,
+              12
+            );
+            user.set("password", hashedPassword);
+          }
+        }
+      },
+    },
+  }
 );
+
+User.prototype.comparePassword = async function (password: string) {
+  const isCorrectPassword = await bcrypt.compare(password, this!.password);
+  return isCorrectPassword;
+};
 
 export default User;
