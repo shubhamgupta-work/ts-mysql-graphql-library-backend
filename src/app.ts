@@ -1,15 +1,16 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import { ApolloServer, BaseContext } from "@apollo/server";
+import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { json } from "body-parser";
 import morgan from "morgan";
 import typeDefs from "./graphql/schema";
 import resolvers from "./graphql/resolvers";
 
-const server = new ApolloServer<BaseContext>({
+const server = new ApolloServer({
   typeDefs,
   resolvers,
+  status400ForVariableCoercionErrors: true,
 });
 
 const app: Application = express();
