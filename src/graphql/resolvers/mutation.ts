@@ -1,7 +1,9 @@
-import * as UserController from "../../controllers/userController";
+import { createUser, login } from "../../controllers/userController";
 
 const Mutation = {
-  ...UserController,
+  // User
+  createUser: createUser,
+  login: login,
 };
 
 export default Mutation;
