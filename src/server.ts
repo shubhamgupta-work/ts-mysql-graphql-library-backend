@@ -1,7 +1,8 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 import app from "./app";
 import sequelize from "./database/dbInstance";
-require("./models/index");
+import "./models/index";
 
 const port: number = Number(process.env.PORT) || 9000;
 
