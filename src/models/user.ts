@@ -1,8 +1,28 @@
 import sequelize from "../database/dbInstance";
-import { DataTypes } from "sequelize";
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from "sequelize";
 import bcrypt from "bcryptjs";
 
-const User = sequelize.define(
+export interface UserModel
+  extends Model<
+    InferAttributes<UserModel>,
+    InferCreationAttributes<UserModel>
+  > {
+  id?: number;
+  name: string;
+  email: string;
+  address: string;
+  password: string;
+  createdAt?: Date;
+  updateAt?: Date;
+  comparePassword: (a: string) => Promise<boolean>;
+}
+
+const User = sequelize.define<UserModel>(
   "user",
   {
     id: {
@@ -22,6 +42,7 @@ const User = sequelize.define(
     email: {
       type: DataTypes.CHAR(50),
       allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.CHAR(100),

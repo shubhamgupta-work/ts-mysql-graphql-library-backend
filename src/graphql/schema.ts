@@ -7,7 +7,8 @@ type Query {
 
 type Mutation {
   #User
-  createUser(fields: UserInput): Message
+  createUser(fields: UserInput!): Message
+  login(email:String!, password: String!): User!
 
 }
   
@@ -21,6 +22,7 @@ type User {
   address: String
   email: String
   password: String
+  token: String
 }
 
 input UserInput {

@@ -1,7 +1,25 @@
 import sequelize from "../database/dbInstance";
-import { DataTypes } from "sequelize";
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from "sequelize";
 
-const Inventory = sequelize.define(
+export interface InventoryModel
+  extends Model<
+    InferAttributes<InventoryModel>,
+    InferCreationAttributes<InventoryModel>
+  > {
+  id?: number;
+  name: string;
+  author: string;
+  issued?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+const Inventory = sequelize.define<InventoryModel>(
   "inventory",
   {
     id: {
