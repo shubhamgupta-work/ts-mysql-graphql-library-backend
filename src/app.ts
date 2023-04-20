@@ -6,6 +6,7 @@ import { json } from "body-parser";
 import morgan from "morgan";
 import typeDefs from "./graphql/schema";
 import resolvers from "./graphql/resolvers";
+import { ReqWithUser } from "./types/requestType";
 
 const server = new ApolloServer({
   typeDefs,
@@ -26,7 +27,7 @@ app.use(morgan("dev"));
   app.use(
     "/graphql",
     expressMiddleware(server, {
-      context: async ({ req }) => {
+      context: async ({ req }: { req: ReqWithUser }) => {
         return { req };
       },
     })

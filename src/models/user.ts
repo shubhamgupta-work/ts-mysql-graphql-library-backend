@@ -42,7 +42,6 @@ const User = sequelize.define<UserModel>(
     email: {
       type: DataTypes.CHAR(50),
       allowNull: false,
-      unique: true,
     },
     password: {
       type: DataTypes.CHAR(100),
@@ -52,6 +51,7 @@ const User = sequelize.define<UserModel>(
   {
     timestamps: true,
     tableName: "user",
+    indexes: [{ unique: true, fields: ["email"] }],
     hooks: {
       beforeCreate: async function (user) {
         if ("password" in user) {

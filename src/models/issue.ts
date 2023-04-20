@@ -1,8 +1,26 @@
 import sequelize from "../database/dbInstance";
-import { DataTypes } from "sequelize";
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from "sequelize";
 import moment from "moment";
 
-const Issue = sequelize.define(
+interface InventoryModel
+  extends Model<
+    InferAttributes<InventoryModel>,
+    InferCreationAttributes<InventoryModel>
+  > {
+  id?: number;
+  book: number;
+  user: number;
+  issued_on?: Date;
+  issued_upto?: Date;
+  issue_active?: boolean;
+}
+
+const Issue = sequelize.define<InventoryModel>(
   "issue",
   {
     id: {
@@ -36,7 +54,11 @@ const Issue = sequelize.define(
       set() {
         this.setDataValue(
           "issued_upto",
-          moment(this.getDataValue("issued_on").add(14, "days"))
+          new Date(
+            moment(this.getDataValue("issued_on"))!
+              .add(14, "days")
+              .format("YYYY-MM-DD")
+          )
         );
       },
     },
