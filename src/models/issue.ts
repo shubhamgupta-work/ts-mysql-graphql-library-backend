@@ -6,6 +6,7 @@ import {
   Model,
 } from "sequelize";
 import moment from "moment";
+import Inventory from "./inventory";
 
 interface InventoryModel
   extends Model<
@@ -68,7 +69,23 @@ const Issue = sequelize.define<InventoryModel>(
       allowNull: false,
     },
   },
-  { timestamps: true, tableName: "issue" }
+  {
+    timestamps: true,
+    tableName: "issue",
+    hooks: {
+      afterCreate: async (issue) => {
+        const bookId = issue.getDataValue("book");
+        await Inventory.update({ issued: true }, { where: { id: bookId } });
+      },
+      afterUpdate: async (issue) => {
+        const issue_active = issue.getDataValue("issue_active");
+        if (issue.changed("issue_active") && !issue_active) {
+          const bookId = issue.getDataValue("book");
+          await Inventory.update({ issued: false }, { where: { id: bookId } });
+        }
+      },
+    },
+  }
 );
 
 export default Issue;

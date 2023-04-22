@@ -14,6 +14,8 @@ type Mutation {
   createBulkInventory(data: [InventoryInput]) : Message
 
   #Issue
+  issueBook(bookId: Int, userId: Int) : Message
+  returnBook(bookId: Int, userId: Int) : Message
 
 }
   
@@ -27,6 +29,7 @@ type User {
   address: String
   email: String
   password: String
+  type: UserType,
   token: String
 }
 
@@ -35,6 +38,7 @@ input UserInput {
   address: String
   email: String
   password: String
+  type: UserType
 }
 
 type Inventory {
@@ -59,9 +63,9 @@ type Issue {
   issue_active: Boolean
 }
 
-type IssueInput {
-  book: Int,
-  user: Int
+enum UserType {
+  member,
+  staff
 }
   
 `;

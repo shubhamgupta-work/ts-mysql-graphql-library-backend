@@ -27,8 +27,8 @@ app.use(morgan("dev"));
   app.use(
     "/graphql",
     expressMiddleware(server, {
-      context: async ({ req }: { req: ReqWithUser }) => {
-        return { req };
+      context: async ({ req }) => {
+        return { req: req as ReqWithUser };
       },
     })
   );

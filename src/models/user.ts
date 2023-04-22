@@ -17,6 +17,7 @@ export interface UserModel
   email: string;
   address: string;
   password: string;
+  type?: "member" | "staff";
   createdAt?: Date;
   updateAt?: Date;
   comparePassword: (a: string) => Promise<boolean>;
@@ -47,6 +48,11 @@ const User = sequelize.define<UserModel>(
       type: DataTypes.CHAR(100),
       allowNull: false,
     },
+    type: {
+      type: DataTypes.ENUM("member", "staff"),
+      defaultValue: "member",
+      allowNull: false,
+    },
   },
   {
     timestamps: true,
@@ -65,14 +71,12 @@ const User = sequelize.define<UserModel>(
         }
       },
       beforeUpdate: async function (user) {
-        if ("password" in user) {
-          if (user.changed("password")) {
-            const hashedPassword = await bcrypt.hash(
-              user.get("password") as string,
-              12
-            );
-            user.set("password", hashedPassword);
-          }
+        if ("password" in user && user.changed("password")) {
+          const hashedPassword = await bcrypt.hash(
+            user.get("password") as string,
+            12
+          );
+          user.set("password", hashedPassword);
         }
       },
     },

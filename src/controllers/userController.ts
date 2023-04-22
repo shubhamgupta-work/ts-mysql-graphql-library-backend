@@ -1,4 +1,5 @@
 import User from "../models/user";
+import { UserType } from "../types/requestType";
 import catchAsync from "../utils/catchAsync";
 import requiredFieldChecker from "../utils/requiredFieldChecker";
 import jwt from "jsonwebtoken";
@@ -8,6 +9,7 @@ interface UserCreation {
   address: string;
   email: string;
   password: string;
+  type?: UserType;
 }
 
 const createReturnToken = (userId: number) => {
@@ -22,10 +24,10 @@ export const createUser = catchAsync<
   any,
   { fields: UserCreation },
   { message: string }
->(async (parent: any, args: { fields: UserCreation }) => {
-  const { name, address, email, password } = args.fields;
+>(async (parent, args) => {
+  const { name, address, email, password, type = "member" } = args.fields;
   requiredFieldChecker({ name, address, email, password }, "body");
-  await User.create({ name, address, email, password });
+  await User.create({ name, address, email, password, type });
   return { message: "User Created" };
 });
 
@@ -33,7 +35,7 @@ export const login = catchAsync<
   any,
   { email: string; password: string },
   { name: string; email: string; token: string }
->(async (parent: any, args: { email: string; password: string }) => {
+>(async (parent, args) => {
   const { email, password } = args;
 
   requiredFieldChecker({ email, password }, "query");
