@@ -146,7 +146,6 @@ export const getExtremeBook = catchAsync<
     ],
     include: [{ model: Inventory, as: "Book", attributes: [] }],
     group: sequelize.col("name"),
-    raw: true,
     order: [["total", "ASC"]],
     ...obj,
   });
