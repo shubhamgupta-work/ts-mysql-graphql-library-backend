@@ -6,6 +6,7 @@ import {
   Model,
 } from "sequelize";
 import bcrypt from "bcryptjs";
+import Issue from "./issue";
 
 export interface UserModel
   extends Model<

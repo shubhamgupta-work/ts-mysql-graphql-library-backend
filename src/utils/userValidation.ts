@@ -27,15 +27,12 @@ export const getUser = async (req: ReqWithUser) => {
   }
 };
 
-export const checkUserType = async (req: ReqWithUser, type: UserType) => {
-  try {
-    const userType = req.user?.type;
-    if (userType !== type) {
-      throw new GraphQLError("You are not authorized for this action", {
-        extensions: { code: 401 },
-      });
-    }
-  } catch (err) {
-    throw err;
+export const checkUserType = (req: ReqWithUser, type: UserType) => {
+  const userType = req.user?.type;
+  if (userType !== type) {
+    throw new GraphQLError("You are not authorized for this action", {
+      extensions: { code: 401 },
+    });
   }
+  return;
 };

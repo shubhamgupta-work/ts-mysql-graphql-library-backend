@@ -7,6 +7,7 @@ import morgan from "morgan";
 import typeDefs from "./graphql/schema";
 import resolvers from "./graphql/resolvers";
 import { ReqWithUser } from "./types/requestType";
+import globalErrorHandler from "./utils/globalErrorHandler";
 
 const server = new ApolloServer({
   typeDefs,

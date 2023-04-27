@@ -5,13 +5,13 @@ import {
   InferCreationAttributes,
   Model,
 } from "sequelize";
-import moment from "moment";
 import Inventory from "./inventory";
+import User from "./user";
 
-interface InventoryModel
+export interface IssueModel
   extends Model<
-    InferAttributes<InventoryModel>,
-    InferCreationAttributes<InventoryModel>
+    InferAttributes<IssueModel>,
+    InferCreationAttributes<IssueModel>
   > {
   id?: number;
   book: number;
@@ -21,7 +21,7 @@ interface InventoryModel
   issue_active?: boolean;
 }
 
-const Issue = sequelize.define<InventoryModel>(
+const Issue = sequelize.define<IssueModel>(
   "issue",
   {
     id: {
@@ -33,18 +33,10 @@ const Issue = sequelize.define<InventoryModel>(
     book: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: "Inventory",
-        key: "id",
-      },
     },
     user: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: "User",
-        key: "id",
-      },
     },
     issued_on: {
       type: DataTypes.DATE,
@@ -52,16 +44,6 @@ const Issue = sequelize.define<InventoryModel>(
     },
     issued_upto: {
       type: DataTypes.DATE,
-      set() {
-        this.setDataValue(
-          "issued_upto",
-          new Date(
-            moment(this.getDataValue("issued_on"))!
-              .add(14, "days")
-              .format("YYYY-MM-DD")
-          )
-        );
-      },
     },
     issue_active: {
       type: DataTypes.BOOLEAN,
@@ -87,5 +69,11 @@ const Issue = sequelize.define<InventoryModel>(
     },
   }
 );
+
+Issue.belongsTo(User, { foreignKey: "user", as: "User" });
+User.hasMany(Issue);
+Issue.belongsTo(Inventory, { foreignKey: "book", as: "Book" });
+Inventory.hasMany(Issue);
+// Issue.belongsTo(Inventory, { foreignKey: "book" });
 
 export default Issue;

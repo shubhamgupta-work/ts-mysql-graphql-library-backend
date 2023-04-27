@@ -5,6 +5,7 @@ import {
   InferCreationAttributes,
   Model,
 } from "sequelize";
+import Issue from "./issue";
 
 export interface InventoryModel
   extends Model<
@@ -14,6 +15,7 @@ export interface InventoryModel
   id?: number;
   name: string;
   author: string;
+  issue_able?: boolean;
   issued?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
@@ -39,6 +41,11 @@ const Inventory = sequelize.define<InventoryModel>(
     issued: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+      allowNull: false,
+    },
+    issue_able: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
       allowNull: false,
     },
   },

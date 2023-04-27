@@ -1,5 +1,8 @@
 import { createUser, login } from "../../controllers/userController";
-import { bulkCreateInventory } from "../../controllers/inventoryController";
+import {
+  bulkCreateInventory,
+  markAsNotIssueAble,
+} from "../../controllers/inventoryController";
 import { issueBook, returnBook } from "../../controllers/issueController";
 
 const Mutation = {
@@ -9,6 +12,7 @@ const Mutation = {
 
   //Inventory
   createBulkInventory: bulkCreateInventory,
+  markAsNotIssueAble,
 
   //Issue
   issueBook,
