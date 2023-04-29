@@ -2,6 +2,7 @@
 A practise library backend project for all the new technologies I am learning - Typescript, MySQL (with Sequelize ORM), and GraphQL.<br/>
 <br/>
 Features Include<br/>
+<br/>
 1.Creating Users (by default manually change them to staff)<br/>
 2.Bulk Add Inventory<br/>
 3.Get Catalogue of Unique books<br/>
