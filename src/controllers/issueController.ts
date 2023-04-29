@@ -90,7 +90,9 @@ export const getAllIssued = catchAsync<
   any,
   { includeReturned: boolean; userEmail?: string; bookName?: string },
   any[]
->(async (parent, { includeReturned, userEmail, bookName }) => {
+>(async (parent, { includeReturned, userEmail, bookName }, { req }) => {
+  await getUser(req);
+  checkUserType(req, "staff");
   let where = {};
 
   if (!includeReturned) {
@@ -126,7 +128,9 @@ export const getExtremeBook = catchAsync<
   any,
   { type: ExtremeBookType },
   { name: string; total: number }[]
->(async (parent, { type }) => {
+>(async (parent, { type }, { req }) => {
+  await getUser(req);
+  checkUserType(req, "staff");
   let obj = {};
 
   if (type === "leastissued") {

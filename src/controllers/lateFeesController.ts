@@ -5,6 +5,7 @@ import LateFees from "../models/lateFees";
 import User from "../models/user";
 import catchAsync from "../utils/catchAsync";
 import { GraphQLError } from "graphql";
+import { checkUserType, getUser } from "../utils/userValidation";
 
 //All the data, only unpaid ones, only paid one, of a specific
 
@@ -28,7 +29,10 @@ export const getLateFeesOfUsers = catchAsync<
   any,
   { type: LateFeesDataType; user: number },
   LateFeesReturnType[]
->(async (parent, { type, user }) => {
+>(async (parent, { type, user }, { req }) => {
+  await getUser(req);
+  checkUserType(req, "staff");
+
   let where = {};
   if (type === "unpaid") {
     where = { ...where, paid: false };
@@ -81,7 +85,9 @@ export const markAsPaid = catchAsync<
   any,
   { lateFeesId: number },
   { message: string }
->(async (parent, { lateFeesId }) => {
+>(async (parent, { lateFeesId }, { req }) => {
+  await getUser(req);
+  checkUserType(req, "staff");
   const entry = await LateFees.findByPk(lateFeesId);
 
   if (!entry) {
