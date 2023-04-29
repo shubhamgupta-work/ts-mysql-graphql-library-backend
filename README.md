@@ -24,4 +24,4 @@ DB_NAME <br/>
 DB_HOST <br/>
 JWT_SECRET <br/>
 <br/>
-Also find the GraphQl Collection here: 
+Also find the GraphQl Collection here: https://rb.gy/r9r57
