@@ -16,11 +16,11 @@ Features Include
 
 For using create an .env file with the follwing variables.
 
-PORT
-DB_USERNAME
-DB_PASSWORD
-DB_NAME
-DB_HOST
-JWT_SECRET
+PORT \n
+DB_USERNAME \n
+DB_PASSWORD \n
+DB_NAME \n
+DB_HOST \n
+JWT_SECRET \n
 
 Also find the GraphQl Collection here: 
