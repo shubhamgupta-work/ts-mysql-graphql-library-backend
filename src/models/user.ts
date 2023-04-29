@@ -18,6 +18,7 @@ export interface UserModel
   email: string;
   address: string;
   password: string;
+  phone: number;
   type?: "member" | "staff";
   createdAt?: Date;
   updateAt?: Date;
@@ -36,6 +37,11 @@ const User = sequelize.define<UserModel>(
     name: {
       type: DataTypes.CHAR(100),
       allowNull: true,
+    },
+    phone: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      defaultValue: 9999999999,
     },
     address: {
       type: DataTypes.CHAR(255),

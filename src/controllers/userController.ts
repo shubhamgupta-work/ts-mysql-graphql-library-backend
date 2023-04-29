@@ -10,6 +10,7 @@ interface UserCreation {
   email: string;
   password: string;
   type?: UserType;
+  phone: number;
 }
 
 const createReturnToken = (userId: number) => {
@@ -25,9 +26,16 @@ export const createUser = catchAsync<
   { fields: UserCreation },
   { message: string }
 >(async (parent, args) => {
-  const { name, address, email, password, type = "member" } = args.fields;
+  const {
+    name,
+    address,
+    email,
+    password,
+    phone,
+    type = "member",
+  } = args.fields;
   requiredFieldChecker({ name, address, email, password }, "body");
-  await User.create({ name, address, email, password, type });
+  await User.create({ name, address, email, password, phone, type });
   return { message: "User Created" };
 });
 

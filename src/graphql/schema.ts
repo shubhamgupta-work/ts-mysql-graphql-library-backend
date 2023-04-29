@@ -2,10 +2,16 @@ const typeDefs: string = `
 #type 
 
 type Query {
+  #Inventory
   getAllInventory(includeNonIssueable: Boolean, onlyNonIssueAble: Boolean): [InventoryList]
   getCatalogue: [InventoryList]
+
+  #Issued
   getAllIssued(includeReturned: Boolean!, userEmail: String, bookName: String): [Issue]
   getExtremeBook(type: ExtremeBookType!): [IssueQuantity]
+
+  #LateFees
+  getLateFeesOfUsers(type: LateFeesDataType!, user: Int): [LateFeesReturnType]
 }
 
 type Mutation {
@@ -21,6 +27,8 @@ type Mutation {
   issueBook(bookId: Int, userId: Int) : Message
   returnBook(bookId: Int, userId: Int) : Message
 
+  #Late Fees
+  markAsPaid (lateFeesId: ID!): Message
 }
   
 type Message {
@@ -34,7 +42,8 @@ type User {
   email: String
   password: String
   type: UserType,
-  token: String
+  token: String,
+  phone: Int
 }
 
 input UserInput {
@@ -43,6 +52,7 @@ input UserInput {
   email: String
   password: String
   type: UserType
+  phone: Int
 }
 
 type Inventory {
@@ -78,6 +88,20 @@ type IssueQuantity {
   total: Int
 }
 
+type LateFeesReturnType {
+  UserId: Int
+  Email: String
+  Name: String
+  Phone: Float
+  Address: String
+  LateFees: Int
+  Paid: Int
+  TotalLateFees: Float
+  Book: String,
+  IssuedOn: String,
+  IssuedUpto: String
+}
+
 enum UserType {
   member,
   staff
@@ -87,6 +111,12 @@ enum ExtremeBookType {
   all
   mostissued
   leastissued
+}
+
+enum LateFeesDataType {
+  all
+  unpaid
+  paid
 }
   
 `;

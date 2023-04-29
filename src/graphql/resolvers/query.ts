@@ -6,6 +6,7 @@ import {
   getAllIssued,
   getExtremeBook,
 } from "../../controllers/issueController";
+import { getLateFeesOfUsers } from "../../controllers/lateFeesController";
 
 const Query = {
   //Inventory
@@ -15,6 +16,9 @@ const Query = {
   //Issue
   getAllIssued: getAllIssued,
   getExtremeBook: getExtremeBook,
+
+  //LateFees
+  getLateFeesOfUsers: getLateFeesOfUsers,
 };
 
 export default Query;
