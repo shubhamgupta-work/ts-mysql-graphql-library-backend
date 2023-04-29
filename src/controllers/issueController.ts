@@ -72,8 +72,6 @@ export const returnBook = catchAsync<
     });
   }
 
-  console.log(args.bookId, issued.getDataValue("issue_active"));
-
   if (!issued.issue_active) {
     throw new GraphQLError("Book is already returned", {
       extensions: { code: 400 },

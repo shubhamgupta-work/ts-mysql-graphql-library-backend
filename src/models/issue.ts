@@ -74,6 +74,5 @@ Issue.belongsTo(User, { foreignKey: "user", as: "User" });
 User.hasMany(Issue);
 Issue.belongsTo(Inventory, { foreignKey: "book", as: "Book" });
 Inventory.hasMany(Issue);
-// Issue.belongsTo(Inventory, { foreignKey: "book" });
 
 export default Issue;
