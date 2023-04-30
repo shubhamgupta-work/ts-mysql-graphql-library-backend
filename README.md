@@ -3,7 +3,7 @@ A practise library backend project for all the new technologies I am learning - 
 <br/>
 Features Include<br/>
 <br/>
-1.Creating Users (by default member manually change them to staff)<br/>
+1.Creating Users (by default member, manually change them to staff)<br/>
 2.Bulk Add Inventory<br/>
 3.Get Catalogue of Unique books<br/>
 4.Get the list of inventory<br/>
@@ -13,9 +13,9 @@ Features Include<br/>
 8.Get List of Issued Books<br/>
 9.Get Report on the issued books<br/>
 10.Charge late fees from users<br/>
-11.Pay the late fees by the users<br/>
+11.Payment of the late fees by the members<br/>
 <br/>
-For using create an .env file with the follwing variables.<br/>
+To use the backend, create an .env file with the follwing variables.<br/>
 <br/>
 PORT <br/>
 DB_USERNAME <br/>
