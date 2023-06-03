@@ -78,6 +78,7 @@ const User = sequelize.define<UserModel>(
         }
       },
       beforeUpdate: async function (user) {
+        //.changes is a sequelize method to check if a field has changed
         if ("password" in user && user.changed("password")) {
           const hashedPassword = await bcrypt.hash(
             user.get("password") as string,

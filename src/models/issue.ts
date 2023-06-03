@@ -63,6 +63,7 @@ const Issue = sequelize.define<IssueModel>(
         const issue_active = issue.getDataValue("issue_active");
         if (issue.changed("issue_active") && !issue_active) {
           const bookId = issue.getDataValue("book");
+          //.getDataValue is same as .get (.get is preffered) or just simple use model.field
           await Inventory.update({ issued: false }, { where: { id: bookId } });
         }
       },
