@@ -81,6 +81,7 @@ export const returnBook = catchAsync<
   await Issue.update(
     { issue_active: false, issued_upto: new Date() },
     { where: { id: issued.id }, individualHooks: true }
+    //afterUpdate hook update works only on bulk update, so we added that "individualHooks: true"
   );
 
   return { message: "Book Return successfully" };
